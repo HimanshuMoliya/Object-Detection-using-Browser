@@ -1,0 +1,130 @@
+<html>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
+        <title>AI | TechyHans</title>
+        
+    </head>
+    <style>
+        .imageContainer > img:hover {
+            transform: scale(2);
+        }
+    </style>
+    <body>
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                  <a class="navbar-brand" href="https://techyhans.com">TechyHans</a>
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                      <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          YOLO
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item" href="#">Image Detection</a></li>
+                          <!-- <li><a class="dropdown-item" href="#">Another action</a></li>
+                          <li><hr class="dropdown-divider"></li>
+                          <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+                        </ul>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                      </li>
+                    </ul>
+                    <form class="d-flex">
+                      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                      <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                  </div>
+                </div>
+              </nav>
+            <br>
+            <div class="row">
+                <div class="col">
+                    <center><h2>Object Detection on Image</h2></center>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <input class="form-control" accept="image/*" type="file" name="ori_image" id="ori_image">
+                </div>
+            </div>
+            <br>
+            <center><button type="button" id="btn_upload" style="color: white; background-color: #0bb3e4;" class="btn btn-lg btn-block">Predict</button></center>
+            <br>
+            <table class="table table-responsive">
+                <thead>
+                  <tr>
+                    <th style="text-align:center" scope="col">Original Photo</th>
+                    <th style="text-align:center" scope="col">Predicted Result</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th style="text-align:center">
+                        <div class="spinner-border text-primary" role="status">
+                            
+                          </div>
+                        <div class="imageContainer" id="original_image">
+                            </div>
+                    </th>
+                    <td style="text-align:center">
+                        <div class="spinner-border text-primary" role="status">
+                            
+                          </div>
+                        <div class="imageContainer" id="result_image">
+                            </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+    </body>
+    <script>
+        $(document).ready(function(){
+            $(".spinner-border").hide()
+            $("#btn_upload").click(function(){
+                console.log("Click")
+                formdata = new FormData();
+                if($("#ori_image").prop('files').length > 0)
+                {
+                    $(".spinner-border").show()
+                    $("#original_image").empty()
+                    $("#result_image").empty()
+                    $("#btn_upload").prop("disabled",true);
+                    file =$("#ori_image").prop('files')[0];
+                    formdata.append("ori_image", file);
+
+                    jQuery.ajax({
+                        url: "http://192.168.1.104:5000/predict",
+                        type: "POST",
+                        data: formdata,
+                        processData: false,
+                        contentType: false,
+                        success: function (result) {
+                            $("#btn_upload").prop("disabled",false);
+                            $(".spinner-border").hide()
+                            $("#original_image").empty()
+                            $("#result_image").empty()
+                            $("#original_image").html("<img class='NO-CACHE' width = '350px' src = 'http://192.168.1.104:5000/ori-image/"+result+"?a=" + Math.random()+"' >")
+                            $("#result_image").html("<img class='NO-CACHE' width = '350px' src = 'http://192.168.1.104:5000/predicted-image/"+result+"?a=" + Math.random()+"' >")
+                        }
+                    });
+                }
+                else{
+                    alert("Please Select Valid Image")
+                }
+                
+            });
+        });
+        
+    </script>
+</html>
