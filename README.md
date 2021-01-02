@@ -3,11 +3,11 @@ This repository enable us to perform object detecrion by uploading image using
 browser.
 
 ### Requirements
-- YOLOv4 Pretrained Model - Download [here](https://drive.google.com/open?id=1cewMfusmPjYWbrnuJRuKhPMwRe_b9PaT).
+- YOLOv4 Pretrained Model -- Download [here](https://drive.google.com/open?id=1cewMfusmPjYWbrnuJRuKhPMwRe_b9PaT).
 - Flask == 1.1.2
 - Flask-Cors == 3.0.9
 - Opencv-Python == 4.4.0
-- Numpy 1.19.4
+- Numpy == 1.19.4
 
 ### How to run?
 1. Clone this repository.
