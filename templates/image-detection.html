@@ -104,7 +104,7 @@
                     formdata.append("ori_image", file);
 
                     jQuery.ajax({
-                        url: "http://192.168.1.104:5000/predict",
+                        url: "http://localhost:5000/predict",
                         type: "POST",
                         data: formdata,
                         processData: false,
@@ -114,8 +114,8 @@
                             $(".spinner-border").hide()
                             $("#original_image").empty()
                             $("#result_image").empty()
-                            $("#original_image").html("<img class='NO-CACHE' width = '350px' src = 'http://192.168.1.104:5000/ori-image/"+result+"?a=" + Math.random()+"' >")
-                            $("#result_image").html("<img class='NO-CACHE' width = '350px' src = 'http://192.168.1.104:5000/predicted-image/"+result+"?a=" + Math.random()+"' >")
+                            $("#original_image").html("<img class='NO-CACHE' width = '350px' src = 'http://localhost:5000/ori-image/"+result+"?a=" + Math.random()+"' >")
+                            $("#result_image").html("<img class='NO-CACHE' width = '350px' src = 'http://localhost:5000/predicted-image/"+result+"?a=" + Math.random()+"' >")
                         }
                     });
                 }
